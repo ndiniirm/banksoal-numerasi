@@ -1,6 +1,6 @@
-import tkinter as tk
-from tkinter import ttk, messagebox
-from PIL import Image, ImageTk, ImageSequence
+#import tkinter as tk
+#from tkinter import ttk, messagebox
+#from PIL import Image, ImageTk, ImageSequence
 import json, os
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -297,10 +297,10 @@ def tampilkan_soal(no):
             img = Image.open(img_path)
             # optional: atur ukuran yg sesuai area tampilan
             img.thumbnail((400, 250), Image.LANCZOS)
-            soal_img = ImageTk.PhotoImage(img)
+            #soal_img = ImageTk.PhotoImage(img)
 
             # buat label gambar **di scrollable_frame** (di atas frame_opsi)
-            gambar_label = tk.Label(scrollable_frame, image=soal_img, bg=scrollable_frame.cget("bg"))
+            #gambar_label = tk.Label(scrollable_frame, image=soal_img, bg=scrollable_frame.cget("bg"))
             gambar_label.image = soal_img    # simpan referensi supaya tidak ke-GC
             gambar_label.pack(pady=(0, 10), anchor="w")  # langsung di atas opsi
             gambar_cache = soal_img
@@ -313,7 +313,7 @@ def tampilkan_soal(no):
         gambar_cache = None
 
     for opsi in soal["opsi"]:
-        rb = tk.Radiobutton(
+        #rb = tk.Radiobutton(
             frame_opsi,
             text=opsi,
             variable=var_jawaban,
@@ -378,7 +378,7 @@ def on_select_leaderboard(event):
 def tampilkan_preview(jawaban_dict):
     for widget in frame_review.winfo_children():
         widget.destroy()
-    tk.Label(frame_review, text="Preview Jawaban", font=("Comic Sans MS", 12, "bold")).pack(pady=5)
+    #tk.Label(frame_review, text="Preview Jawaban", font=("Comic Sans MS", 12, "bold")).pack(pady=5)
 
     for i, soal in enumerate(soal_numerasi):
         kunci = soal["jawaban"]
@@ -389,7 +389,7 @@ def tampilkan_preview(jawaban_dict):
         else:
             warna = "red"     # salah atau belum dijawab
 
-        btn = tk.Button(
+        #btn = tk.Button(
             frame_review, text=str(i+1), width=4,
             bg=warna, fg="white",
             command=lambda no=i, jw=jawaban: preview_detail(no, jw)
@@ -397,50 +397,50 @@ def tampilkan_preview(jawaban_dict):
         btn.pack(side="left", padx=3, pady=5)
 
 def preview_detail(no, jawaban):
-    top = tk.Toplevel(root)
+    #top = tk.Toplevel(root)
     top.title(f"Detail Soal {no+1}")
     soal = soal_numerasi[no]
     pertanyaan = soal["pertanyaan"]
     kunci = soal["jawaban"]
     benar = "✅" if jawaban == kunci else "❌"
 
-    tk.Label(top, text=f"Soal {no+1}:", font=("Segoe UI", 12, "bold")).pack(anchor="w", padx=10, pady=5)
-    tk.Label(top, text=pertanyaan, wraplength=400, justify="left").pack(anchor="w", padx=10)
-    tk.Label(top, text=f"Jawabanmu: {jawaban if jawaban else '(kosong)'} {benar}", fg="blue").pack(anchor="w", padx=10, pady=5)
-    tk.Label(top, text=f"Jawaban benar: {kunci}", fg="green").pack(anchor="w", padx=10)
+    #tk.Label(top, text=f"Soal {no+1}:", font=("Segoe UI", 12, "bold")).pack(anchor="w", padx=10, pady=5)
+    #tk.Label(top, text=pertanyaan, wraplength=400, justify="left").pack(anchor="w", padx=10)
+    #tk.Label(top, text=f"Jawabanmu: {jawaban if jawaban else '(kosong)'} {benar}", fg="blue").pack(anchor="w", padx=10, pady=5)
+    #tk.Label(top, text=f"Jawaban benar: {kunci}", fg="green").pack(anchor="w", padx=10)
 
 # ---------- Setup GUI ----------
-root = tk.Tk()
+#root = tk.Tk()
 root.title("Bank Soal Numerasi")
 root.geometry("750x500")
 
 # canvas background
-canvas_bg = tk.Canvas(root)
+#canvas_bg = tk.Canvas(root)
 canvas_bg.pack(fill="both", expand=True)
 
 # frame utama langsung di atas wallpaper
-frame_awal = tk.Frame(canvas_bg)  
+#frame_awal = tk.Frame(canvas_bg)  
 frame_awal.place(relx=0.5, rely=0.5, anchor="center")
 
-tk.Label(frame_awal, text="📝 Bank Soal Numerasi 📝", font=("Cooper Black", 18, "bold")).pack(pady=20)
-tk.Label(frame_awal, text="Masukkan Nama:", font=("Segoe UI", 14)).pack()
-entry_nama = tk.Entry(frame_awal, font=("Segoe UI", 12))
+#tk.Label(frame_awal, text="📝 Bank Soal Numerasi 📝", font=("Cooper Black", 18, "bold")).pack(pady=20)
+#tk.Label(frame_awal, text="Masukkan Nama:", font=("Segoe UI", 14)).pack()
+#entry_nama = tk.Entry(frame_awal, font=("Segoe UI", 12))
 entry_nama.pack(pady=10)
-tk.Button(frame_awal, text="Mulai", font=("Comic Sans MS", 14, "bold"), command=mulai_kuis, bg="lightgreen").pack(pady=20)
+#tk.Button(frame_awal, text="Mulai", font=("Comic Sans MS", 14, "bold"), command=mulai_kuis, bg="lightgreen").pack(pady=20)
 
 # --- Frame Kuis ---
-frame_kuis = tk.Frame(canvas_bg)  
-frame_hasil = tk.Frame(canvas_bg)
+#frame_kuis = tk.Frame(canvas_bg)  
+#frame_hasil = tk.Frame(canvas_bg)
 
 # kiri → pakai canvas + scrollbar + grid 2 kolom
-frame_kiri = tk.Frame(frame_kuis, bg="lightgray", width=180)
+#frame_kiri = tk.Frame(frame_kuis, bg="lightgray", width=180)
 frame_kiri.pack(side="left", fill="y")
 
-tk.Label(frame_kiri, text="Nomor Soal", font=("Cooper Black", 12, "bold"), bg="lightgray").pack(pady=10)
+#tk.Label(frame_kiri, text="Nomor Soal", font=("Cooper Black", 12, "bold"), bg="lightgray").pack(pady=10)
 
-canvas_kiri = tk.Canvas(frame_kiri, bg="lightgray", width=160)
-scrollbar_kiri = tk.Scrollbar(frame_kiri, orient="vertical", command=canvas_kiri.yview)
-scrollable_kiri = tk.Frame(canvas_kiri, bg="lightgray")
+#canvas_kiri = tk.Canvas(frame_kiri, bg="lightgray", width=160)
+#scrollbar_kiri = tk.Scrollbar(frame_kiri, orient="vertical", command=canvas_kiri.yview)
+#scrollable_kiri = tk.Frame(canvas_kiri, bg="lightgray")
 
 scrollable_kiri.bind("<Configure>", lambda e: canvas_kiri.configure(scrollregion=canvas_kiri.bbox("all")))
 canvas_kiri.create_window((0, 0), window=scrollable_kiri, anchor="nw")
@@ -454,18 +454,18 @@ soal_buttons = []  # simpan referensi
 
 for i in range(len(soal_numerasi)):
     r, c = divmod(i, 2)
-    btn = tk.Button(scrollable_kiri, text=str(i+1), width=5,
+    #btn = tk.Button(scrollable_kiri, text=str(i+1), width=5,
                     command=lambda no=i: tampilkan_soal(no))
     btn.grid(row=r, column=c, padx=5, pady=5)
     soal_buttons.append(btn)
 
 # kanan dengan scroll
-frame_kanan = tk.Frame(frame_kuis)
+#frame_kanan = tk.Frame(frame_kuis)
 frame_kanan.pack(side="right", fill="both", expand=True)
 
-canvas = tk.Canvas(frame_kanan)
-scrollbar = tk.Scrollbar(frame_kanan, orient="vertical", command=canvas.yview)
-scrollable_frame = tk.Frame(canvas)
+#canvas = tk.Canvas(frame_kanan)
+#scrollbar = tk.Scrollbar(frame_kanan, orient="vertical", command=canvas.yview)
+#scrollable_frame = tk.Frame(canvas)
 
 scrollable_frame.bind(
     "<Configure>",
@@ -478,44 +478,44 @@ canvas.configure(yscrollcommand=scrollbar.set)
 canvas.pack(side="left", fill="both", expand=True)
 scrollbar.pack(side="right", fill="y")
 
-label_timer = tk.Label(scrollable_frame, text="⏰ 30:00", font=("Cooper Black", 12, "bold"), fg="red")
+#label_timer = tk.Label(scrollable_frame, text="⏰ 30:00", font=("Cooper Black", 12, "bold"), fg="red")
 label_timer.pack(pady=5, anchor="w")
 
-label_soal = tk.Label(scrollable_frame, text="", font=("Comic Sans MS", 14), wraplength=600, justify="left", anchor="w")
+#label_soal = tk.Label(scrollable_frame, text="", font=("Comic Sans MS", 14), wraplength=600, justify="left", anchor="w")
 label_soal.pack(pady=20, anchor="w")
 
 # frame khusus untuk opsi jawaban
-frame_opsi = tk.Frame(scrollable_frame)
+#frame_opsi = tk.Frame(scrollable_frame)
 frame_opsi.pack(fill="x", padx=20, pady=10)
 
-var_jawaban = tk.StringVar()
+#var_jawaban = tk.StringVar()
 opsi_buttons = []
 
 for opsi in ["A", "B", "C", "D"]:
-    tk.Radiobutton(frame_opsi, text=opsi, variable=var_jawaban, value=opsi,
+    #tk.Radiobutton(frame_opsi, text=opsi, variable=var_jawaban, value=opsi,
                    font=("Comic Sans MS", 12),
                    command=lambda o=opsi: pilih_jawaban(o)).pack(anchor="w")
 
-frame_nav = tk.Frame(scrollable_frame)
+#frame_nav = tk.Frame(scrollable_frame)
 frame_nav.pack(pady=10)
 
-btn_prev = tk.Button(frame_nav, text="⬅ Sebelumnya", font=("Comic Sans MS", 12, "bold"),
+#btn_prev = tk.Button(frame_nav, text="⬅ Sebelumnya", font=("Comic Sans MS", 12, "bold"),
                      command=lambda: tampilkan_soal(max(0, index_soal - 1)))
 btn_prev.pack(side="left", padx=5)
 
-btn_next = tk.Button(frame_nav, text="Selanjutnya ➡", font=("Comic Sans MS", 12, "bold"),
+#btn_next = tk.Button(frame_nav, text="Selanjutnya ➡", font=("Comic Sans MS", 12, "bold"),
                      command=lambda: tampilkan_soal(min(len(soal_numerasi)-1, index_soal + 1)))
 btn_next.pack(side="right", padx=5)
 
-tk.Button(scrollable_frame, text="Selesai", font=("Comic Sans MS", 12, "bold"), command=selesai_kuis, bg="salmon").pack(pady=5)
+#tk.Button(scrollable_frame, text="Selesai", font=("Comic Sans MS", 12, "bold"), command=selesai_kuis, bg="salmon").pack(pady=5)
 
-label_skor = tk.Label(scrollable_frame, text="Skor: 0", font=("Segoe UI", 12, "italic"))
+#label_skor = tk.Label(scrollable_frame, text="Skor: 0", font=("Segoe UI", 12, "italic"))
 label_skor.pack(pady=10, anchor="w")
 
-frame_bawah = tk.Frame(frame_kanan, bg="#f0f0f0")
+#frame_bawah = tk.Frame(frame_kanan, bg="#f0f0f0")
 frame_bawah.pack(fill="x")
 
-btn_keluar_kuis = tk.Button(frame_bawah, text="KELUAR", width=15, font=("Comic Sans MS", 14, "bold"),
+#btn_keluar_kuis = tk.Button(frame_bawah, text="KELUAR", width=15, font=("Comic Sans MS", 14, "bold"),
                             bg='#FF6B6B', fg='white',
                             command=lambda: [simpan_leaderboard(nama_pemain, skor, jawaban_user), root.destroy()],
                             cursor="hand2")
@@ -526,9 +526,9 @@ canvas.bind("<Configure>", lambda e: canvas.itemconfig("frame", width=e.width))
 # --- Frame Hasil ---
 #frame_hasil = tk.Frame(root)
 
-tk.Label(frame_hasil, text="🏆 Leaderboard 🏆", font=("Comic Sans MS", 16, "bold")).pack(pady=10)
+#tk.Label(frame_hasil, text="🏆 Leaderboard 🏆", font=("Comic Sans MS", 16, "bold")).pack(pady=10)
 
-leaderboard_table = ttk.Treeview(frame_hasil, columns=("Rank", "Nama", "Skor"), show="headings", height=8)
+#leaderboard_table = ttk.Treeview(frame_hasil, columns=("Rank", "Nama", "Skor"), show="headings", height=8)
 leaderboard_table.heading("Rank", text="Rank")
 leaderboard_table.heading("Nama", text="Nama")
 leaderboard_table.heading("Skor", text="Skor")
@@ -538,13 +538,13 @@ leaderboard_table.column("Skor", width=80, anchor="center")
 leaderboard_table.pack(pady=10)
 leaderboard_table.bind("<<TreeviewSelect>>", on_select_leaderboard)
 
-frame_review = tk.Frame(frame_hasil)
+#frame_review = tk.Frame(frame_hasil)
 frame_review.pack(pady=10)
 
-tk.Button(frame_hasil, text="🔄 Reset Leaderboard", font=("Comic Sans MS", 12, "bold"),
+#tk.Button(frame_hasil, text="🔄 Reset Leaderboard", font=("Comic Sans MS", 12, "bold"),
           bg="tomato", fg="white", command=reset_leaderboard).pack(pady=10)
 
-btn_keluar_hasil = tk.Button(frame_hasil, text="KELUAR", width=15, font=("Comic Sans MS", 14, "bold"),
+#btn_keluar_hasil = tk.Button(frame_hasil, text="KELUAR", width=15, font=("Comic Sans MS", 14, "bold"),
                              bg='#FF6B6B', fg='white',
                              command=lambda: [simpan_leaderboard(nama_pemain, skor, jawaban_user), root.destroy()],
                              cursor="hand2")
