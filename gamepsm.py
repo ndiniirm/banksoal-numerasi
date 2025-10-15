@@ -1,6 +1,6 @@
-import tkinter as tk
-from tkinter import ttk, messagebox
-from PIL import Image, ImageTk, ImageSequence
+#import tkinter as tk
+#from tkinter import ttk, messagebox
+#from PIL import Image, ImageTk, ImageSequence
 import json, os
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
