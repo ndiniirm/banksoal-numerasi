@@ -3,7 +3,7 @@ import json, os
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # ------------ DATA SOAL NUMERASI ------------
-soal_numerasi = [
+soal_numerasi_7 = [
     {
         "pertanyaan": "Perusahaan PT. Candy Land memproduksi dua jenis produk, yaitu produk candy fruit mulberry dan candy fruit raspberry. "
                       "Untuk memproduksi setiap produk candy fruit mulberry dibutuhkan 3 kg gula dan 2 kg berry. "
@@ -19,7 +19,7 @@ soal_numerasi = [
     },
     {
         "pertanyaan": "Dina adalah salah satu siswa SMP Negeri 25 Surabaya yang berasal dari Bandung. Dina biasanya pulang ke Bandung satu atau dua kali dalam sebulan. Dalam perjalanan pulang pergi dari Surabaya ke Bandung, Dina menggunakan transportasi kereta api dan angkot. Pada bulan ini, Dina telah melakukan dua kali perjalanan ke Bandung. Pada perjalanan pertama, ia membeli 2 tiket kereta api dan naik angkot sebanyak 4 kali. Pada perjalanan kedua, Dina hanya membeli 1 tiket kereta api (karena perjalanan balik ke Surabaya dibiayai oleh orang tuanya) dan menggunakan angkot sebanyak 5 kali. Harga masing-masing tiket kereta adalah 𝑅𝑝 95.000,00 dan untuk naik angkot 1 kali 𝑅𝑝 6.000,00. Dari kedua kondisi permasalahan didapat persamaan yaitu 3𝑥 + 9𝑦. Tentukan persamaan yang ekuivalen dengan persamaan diatas!",
-        "opsi": ["(3x + 3y) + (x + 5y)", "2(x + 2y) + (x + 5y)", "2(2x + 4y) + 2(x + 5y)", "2(x + 2y) + (x + 5y)"],
+        "opsi": ["(3x + 3y) + (x + 5y)", "2(x + 2y) + (x + 5y)", "2(2x + 4y) + 2(x + 5y)", "2(x + 2y) + (2x + 5y)"],
         "jawaban": "2(x + 2y) + (x + 5y)",
         "gambar": None
     },
@@ -42,7 +42,7 @@ soal_numerasi = [
         "gambar": None
     },
     {
-        "pertanyaan": "Komposisi Biskuit A (berat 150 g)\n"
+        "pertanyaan": "Komposisi Biskuit A (berat 150 g) \n"
                     "• Lemak total 7% \n"
                     "• Lemak jenuh 18% \n"
                     "• Protein 5% \n"
@@ -166,6 +166,15 @@ soal_numerasi = [
         "jawaban": "2",
         "gambar": "grafik.png"
     },
+    {
+        "pertanyaan": "!",
+        "opsi": ["", "", "", ""],
+        "jawaban": "2",
+        "gambar": "grafik.png"
+    }
+]
+
+soal_numerasi_8 = [
     {
         "pertanyaan": "!",
         "opsi": ["", "", "", ""],
