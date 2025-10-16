@@ -1,9 +1,10 @@
 import streamlit as st
 import json, os
-from gamepsm import soal_numerasi
+from gamepsm import soal_numerasi_7, soal_numerasi_8  # kamu perlu punya dua file soal terpisah
 
 LEADERBOARD_FILE = "leaderboard.json"
 
+# ---------- Fungsi Leaderboard ----------
 def load_leaderboard():
     if not os.path.exists(LEADERBOARD_FILE):
         return []
@@ -17,42 +18,77 @@ def save_leaderboard(data):
 # ---------- Streamlit Setup ----------
 st.set_page_config(page_title="Bank Soal Numerasi", layout="wide")
 
+# ---------- Inisialisasi Session ----------
 if "page" not in st.session_state:
-    st.session_state.page = "awal"
+    st.session_state.page = "opening"
 if "nama" not in st.session_state:
     st.session_state.nama = ""
+if "jenjang" not in st.session_state:
+    st.session_state.jenjang = ""
 if "jawaban_user" not in st.session_state:
     st.session_state.jawaban_user = {}
 if "index" not in st.session_state:
     st.session_state.index = 0
 
-# ---------- Halaman Awal ----------
-if st.session_state.page == "awal":
-    st.title("📝 Bank Soal Numerasi SMP")
+# ---------- Pilih soal sesuai jenjang ----------
+def get_soal():
+    if st.session_state.jenjang == "Kelas 7":
+        return soal_numerasi_7
+    elif st.session_state.jenjang == "Kelas 8":
+        return soal_numerasi_8
+    else:
+        return []
+
+# ---------- Halaman Opening ----------
+if st.session_state.page == "opening":
+    st.title("🎓 Selamat Datang di Bank Soal Numerasi SMP")
+    st.markdown(
+        """
+        Halo! 👋  
+        Platform ini dirancang untuk membantu kamu berlatih **soal numerasi interaktif** sesuai jenjang kelasmu.  
+        Yuk uji kemampuan berhitungmu dan lihat peringkatmu di leaderboard! 🏆
+        """
+    )
+    if st.button("Mulai ▶️"):
+        st.session_state.page = "awal"
+        st.rerun()
+
+# ---------- Halaman Input Nama & Jenjang ----------
+elif st.session_state.page == "awal":
+    st.title("📝 Persiapan Kuis Numerasi")
+
     st.session_state.nama = st.text_input("Masukkan nama kamu:")
+    st.session_state.jenjang = st.selectbox(
+        "Pilih jenjang kelas:",
+        ["", "Kelas 7", "Kelas 8"]
+    )
 
     if st.button("Mulai Kuis"):
         if not st.session_state.nama.strip():
             st.warning("Masukkan nama dulu ya!")
+        elif not st.session_state.jenjang:
+            st.warning("Pilih jenjang kelas dulu ya!")
         else:
             st.session_state.page = "kuis"
+            st.session_state.index = 0
+            st.session_state.jawaban_user = {}
             st.rerun()
 
 # ---------- Halaman Kuis ----------
 elif st.session_state.page == "kuis":
+    soal_numerasi = get_soal()
+    if not soal_numerasi:
+        st.error("Soal untuk jenjang ini belum tersedia.")
+        st.stop()
+
     col_kiri, col_kanan = st.columns([1, 3])
 
     # --- Sidebar kiri: Nomor Soal ---
     with col_kiri:
         st.subheader("Nomor Soal")
         for i in range(len(soal_numerasi)):
-            # Warna tombol sesuai status
-            if i in st.session_state.jawaban_user:
-                color = "#90EE90"  # hijau
-            else:
-                color = "#D3D3D3"  # abu
+            color = "#90EE90" if i in st.session_state.jawaban_user else "#D3D3D3"
 
-            # Tombol interaktif tanpa reload
             if st.button(f"{i+1}", key=f"btn{i}"):
                 st.session_state.index = i
                 st.rerun()
@@ -116,7 +152,11 @@ elif st.session_state.page == "kuis":
                     if soal_numerasi[i]["jawaban"] == j
                 )
                 leaderboard = load_leaderboard()
-                leaderboard.append({"nama": st.session_state.nama, "skor": benar})
+                leaderboard.append({
+                    "nama": st.session_state.nama,
+                    "jenjang": st.session_state.jenjang,
+                    "skor": benar
+                })
                 save_leaderboard(leaderboard)
                 st.session_state.skor = benar
                 st.session_state.page = "hasil"
@@ -128,7 +168,10 @@ elif st.session_state.page == "kuis":
 
 # ---------- Halaman Hasil ----------
 elif st.session_state.page == "hasil":
-    st.success(f"🎉 Selamat, {st.session_state.nama}! Skor kamu: {st.session_state.skor}")
+    st.success(f"🎉 Selamat, {st.session_state.nama}!")
+    st.write(f"**Jenjang:** {st.session_state.jenjang}")
+    st.write(f"**Skor kamu:** {st.session_state.skor}")
+
     st.subheader("🏆 Leaderboard")
 
     leaderboard = load_leaderboard()
@@ -136,7 +179,10 @@ elif st.session_state.page == "hasil":
     st.dataframe(data_sorted)
 
     if st.button("🔁 Ulangi"):
-        st.session_state.page = "awal"
+        st.session_state.page = "opening"
         st.session_state.index = 0
         st.session_state.jawaban_user = {}
         st.rerun()
+
+#buat nge run wkwk
+#cd "C:\Users\Andin\Documents\PSM\project"
