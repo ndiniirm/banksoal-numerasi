@@ -3,7 +3,7 @@ import json, os
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # ------------ DATA SOAL NUMERASI ------------
-soal_numerasi_7 = [
+soal7_paket1 = [
     {
         "pertanyaan": "Rina membantu ibunya berjualan kue. Setiap kantong berisi 2 buah risol dan 3 buah pastel. Harga satu risol adalah r rupiah, dan harga satu pastel adalah p rupiah. Bentuk aljabar yang menyatakan total harga isi satu kantong adalah...",
         "opsi": ["2r + 3p",
@@ -230,8 +230,26 @@ soal_numerasi_7 = [
         "gambar": None
     },
 ]
- 
-soal_numerasi_8 = [
+
+soal7_paket2 = [
+    {
+        "pertanyaan": "Sebuah persegi memiliki sisi x cm. Luas persegi tersebut adalah...",
+        "opsi": ["2x", "4x", "x²", "x + x"],
+        "jawaban": "x²",
+        "gambar": None
+    }
+]
+
+soal7_paket3 = [
+    {
+        "pertanyaan": "Jika a = 3 dan b = 5, maka nilai dari a + b adalah...",
+        "opsi": ["8", "15", "35", "2"],
+        "jawaban": "8",
+        "gambar": None
+    }
+]
+
+soal8_paket1 = [
     {
         "pertanyaan": "Sebuah perusahaan sabun memproduksi 200 batang sabun setiap hari. Untuk memperluas usahanya, perusahaan memutuskan untuk meningkatkan kapasitas produksi sebesar 2 kali lipat setiap minggu selama 3 minggu berturut-turut. Berapa banyak sabun yang dihasilkan perusahaan pada minggu ketiga?",
         "opsi": ["800 batang", "1.600 batang", "3.200 batang", "400 batang"],
@@ -341,6 +359,38 @@ soal_numerasi_8 = [
         "gambar": None
     },
 ]
+
+soal8_paket2 = [
+    {
+        "pertanyaan": "Sebuah persegi memiliki sisi x cm. Luas persegi tersebut adalah...",
+        "opsi": ["2x", "4x", "x²", "x + x"],
+        "jawaban": "x²",
+        "gambar": None
+    }
+]
+
+soal8_paket3 = [
+    {
+        "pertanyaan": "Jika a = 3 dan b = 5, maka nilai dari a + b adalah...",
+        "opsi": ["8", "15", "35", "2"],
+        "jawaban": "8",
+        "gambar": None
+    }
+]
+
+# ================= GABUNG =================
+soal_numerasi = {
+    "Kelas 7": {
+        "Paket 1": soal7_paket1,
+        "Paket 2": soal7_paket2,
+        "Paket 3": soal7_paket3
+    },
+    "Kelas 8": {
+        "Paket 1": soal8_paket1,
+        "Paket 2": soal8_paket2,
+        "Paket 3": soal8_paket3
+    }
+}
 
 # ------------ FILE LEADERBOARD ------------
 LEADERBOARD_FILE = "leaderboard.json"
