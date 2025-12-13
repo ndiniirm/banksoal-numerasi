@@ -1,6 +1,6 @@
 import streamlit as st
 import json, os
-from gamepsm import soal_numerasi_7, soal_numerasi_8
+from gamepsm import soal_numerasi
 
 # --- Path absolut supaya JSON selalu tersimpan di folder ini ---
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -32,6 +32,8 @@ if "nama" not in st.session_state:
     st.session_state.nama = ""
 if "jenjang" not in st.session_state:
     st.session_state.jenjang = ""
+if "paket" not in st.session_state:
+    st.session_state.paket = ""
 if "jawaban_user" not in st.session_state:
     st.session_state.jawaban_user = {}
 if "index" not in st.session_state:
@@ -39,12 +41,11 @@ if "index" not in st.session_state:
 
 # ---------- Pilih soal ----------
 def get_soal():
-    if st.session_state.jenjang == "Kelas 7":
-        return soal_numerasi_7
-    elif st.session_state.jenjang == "Kelas 8":
-        return soal_numerasi_8
-    else:
-        return []
+    return soal_numerasi[
+        st.session_state.jenjang
+    ][
+        st.session_state.paket
+    ]
 
 # ---------- Halaman Opening ----------
 if st.session_state.page == "opening":
@@ -61,7 +62,7 @@ if st.session_state.page == "opening":
 
 # ---------- Halaman Input Nama ----------
 elif st.session_state.page == "awal":
-    st.title("📝 Persiapan Kuis Numerasi")
+    st.title("📝 Identitas")
 
     st.session_state.nama = st.text_input("Masukkan nama kamu:")
     st.session_state.jenjang = st.selectbox(
@@ -69,16 +70,40 @@ elif st.session_state.page == "awal":
         ["", "Kelas 7", "Kelas 8"]
     )
 
-    if st.button("Mulai Kuis", key="mulai_kuis"):
+    if st.button("Lanjut ➡"):
         if not st.session_state.nama.strip():
             st.warning("Masukkan nama dulu ya!")
         elif not st.session_state.jenjang:
-            st.warning("Pilih jenjang kelas dulu ya!")
+            st.warning("Pilih jenjang dulu ya!")
         else:
-            st.session_state.page = "kuis"
-            st.session_state.index = 0
-            st.session_state.jawaban_user = {}
+            st.session_state.page = "pilih_paket"
             st.rerun()
+
+# ---------- Halaman Pilih Paket ----------
+elif st.session_state.page == "pilih_paket":
+    st.title("📦 Pilih Paket Soal")
+
+    st.session_state.paket = st.selectbox(
+        "Pilih paket soal:",
+        ["", "Paket 1", "Paket 2", "Paket 3"]
+    )
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+        if st.button("⬅ Kembali"):
+            st.session_state.page = "awal"
+            st.rerun()
+
+    with col2:
+        if st.button("Mulai Kuis ▶️"):
+            if not st.session_state.paket:
+                st.warning("Pilih paket soal dulu ya!")
+            else:
+                st.session_state.page = "kuis"
+                st.session_state.index = 0
+                st.session_state.jawaban_user = {}
+                st.rerun()
 
 # ---------- Halaman Kuis ----------
 elif st.session_state.page == "kuis":
@@ -159,6 +184,7 @@ elif st.session_state.page == "kuis":
                 leaderboard.append({
                     "nama": st.session_state.nama,
                     "jenjang": st.session_state.jenjang,
+                    "paket": st.session_state.paket,
                     "skor": benar,
                     "jawaban": [st.session_state.jawaban_user.get(i, None) for i in range(len(soal_numerasi))]
                 })
@@ -188,13 +214,18 @@ elif st.session_state.page == "hasil":
         nama = entry.get("nama", "Tanpa Nama")
         skor = entry.get("skor", 0)
         jenjang = entry.get("jenjang", "Kelas 7")
+        paket = entry.get("paket", "Paket 1")
         jawaban_user = entry.get("jawaban", [])
 
-        soal_numerasi = soal_numerasi_7 if jenjang == "Kelas 7" else soal_numerasi_8
+        soal_paket = soal_numerasi[jenjang][paket]
 
-        with st.expander(f"{nama} — Skor: {skor} ({jenjang})", expanded=False):
+        with st.expander(
+            f"{nama} — Skor: {skor} ({jenjang}, {paket})",
+            expanded=False
+        ):
+
             st.write("**Rincian Jawaban:**")
-            for i, soal in enumerate(soal_numerasi):
+            for i, soal in enumerate(soal_paket):
                 kunci = soal["jawaban"]
                 jawab = jawaban_user[i] if i < len(jawaban_user) else None
 
@@ -211,3 +242,7 @@ elif st.session_state.page == "hasil":
         st.session_state.index = 0
         st.session_state.jawaban_user = {}
         st.rerun()
+
+#buat nge run wkwk
+#cd "D:PSM\project"
+#streamlit run banksoal_streamlit.py
